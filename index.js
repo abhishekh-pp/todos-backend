@@ -93,7 +93,7 @@ app.post("/users/login", async (req, res, next) => {
 
     const passwordMatch = bcrypt.compareSync(password, user.password);
     if (!passwordMatch) {
-      return res.send(401).send("Login failed");
+      return res.status(401).send("Login failed");
     }
     const token = jwt.sign(
       { _id: user._id, name: user.name },
@@ -151,6 +151,4 @@ async function main() {
   const password = process.env.DB_PASSWORD;
   const urlWithPassword = url.replace("<password>", password);
   await mongoose.connect(urlWithPassword);
-
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
